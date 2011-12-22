@@ -1,0 +1,14 @@
+application: engineapp
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+- url: /img
+  static_dir: img
+
+- url: .*
+  script: main.py
