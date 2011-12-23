@@ -1,0 +1,18 @@
+<html><head><font face="Andalus" color="0000FF" size="60" ><center>E-Sports-Auction</center></font></head>
+                                    <head><font face="Andalus" color="0000FF" size="30"><center>Volleyball</center></font></head>
+                                    <div align=right><font size="16"><a href="/login">Log in</a></font></div><p></p>
+                                    <div align=center><img src="/img/images.jpg">
+                                    <table width="30" border="10" bordercolor="009900">
+                                    <caption><font face="MV Boli" color="00FF00" size="28">Categories</font></caption>
+                                    <th><button onclick="location.href='/basketball'">Basketball</button></th><tr>
+                                    <th><button onclick="location.href='/baseball'">Baseball</button></th><tr>
+                                    <th><button onclick="location.href='/volleyball'">Volleyball</button></th><tr>
+                                    <th><button onclick="location.href='/soccer'">Soccer</button></th><tr>
+                                    <th><button onclick="location.href='/tennis'">Tennis</button></th><tr>
+                                    <th><button onclick="location.href='/tabletennis'">Table Tennis</button></th><tr>
+                                    <th><button onclick="location.href='/badminton'">Badminton</button></th><tr>
+                                    <th><button onclick="location.href='/others'">Others</button></th><tr>
+                                    
+                                    
+                                    </table></div>
+                                    </html>
