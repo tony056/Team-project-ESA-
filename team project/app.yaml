@@ -1,4 +1,4 @@
-application: teamproject
+application: e-sports-auction
 version: 1
 runtime: python
 api_version: 1

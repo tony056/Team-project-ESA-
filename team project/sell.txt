@@ -1,0 +1,21 @@
+<html><head><font face="Andalus" color="0000FF" size="60" ><center>E-Sports-Auction</center></font></head>
+	<body>	
+<center><table width="600" border="10" bordercolor="009900">
+		<th><a href="">Sell</a></th>
+		<th><a href="">Buy</a></th>
+		<th><a href="/login">Log in</a></th>
+		<th><a href="/logout">Log out</a></th>
+		<th><a href="">Help</a></th>
+		<th><a href="">My auction</a></th></table></center><p>
+	<form action="/selldata" method="post">
+	<div align=center><textarea name="name" row="1" cols="100"></textarea></div>
+	<div align=center><textarea name="lowestprice" row="1" cols="100"></textarea></div>
+	<div align=center><textarea name="new" row="1" cols="100"></textarea></div>
+	<div align=center><textarea name="method" row="1" cols="100"></textarea></div>
+	<div align=center><textarea name="size" row="1" cols="100"></textarea></div>
+	<div align=center><textarea name="text" row="3" cols="100"></textarea></div>
+	<div align=center><input type="submit" value="Submit"></input></div>
+	</form></body></html>
+	
+	
+	

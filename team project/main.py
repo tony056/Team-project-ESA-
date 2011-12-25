@@ -37,10 +37,42 @@ class login(webapp.RequestHandler):
         user = users.get_current_user()
         if user:
           
-          self.response.headers['Content-Type'] = 'text/plain'
+          #self.response.headers['Content-Type'] = 'text/plain'
           self.response.out.write('Hello, ' + user.nickname())
+          self.response.out.write("""<div><button onclick="location.href='/'">MainPage</button></div></body></html>""")
         else:
           self.redirect(users.create_login_url(self.request.uri))
+class logout(webapp.RequestHandler):
+    def get(self):
+        self.redirect(users.create_logout_url('/'))
+class database(db.Model):
+    name = db.StringProperty()
+    lowestprice = db.IntegerProperty()
+    method = db.StringProperty()
+    new = db.StringProperty()
+    size = db.FloatProperty()
+    text = db.TextProperty()
+class sell(webapp.RequestHandler):
+    def get(self):
+        template_values={
+        
+            }
+        path = os.path.join(os.path.dirname(__file__), 'sell.txt') 
+        self.response.out.write(template.render(path, template_values))
+        
+class selldata(webapp.RequestHandler):
+    def post(self):
+        Database=database()
+        Database.name=self.request.get('name')
+        Database.lowestprice=int(self.request.get('lowestprice'))
+        Database.new=self.request.get('new')
+        Database.method=self.request.get('method')
+        Database.size=float(self.request.get('size'))
+        Database.text=self.request.get('text')
+        Database.put()
+        self.redirect('/')
+        
+        
 #class search(webapp.RequestHandler):
 class basketball(webapp.RequestHandler):
     def get(self):
@@ -112,7 +144,7 @@ class baseball(webapp.RequestHandler):
         path = os.path.join(os.path.dirname(__file__), 'baseball.txt')        
         self.response.out.write(template.render(path, template_values))
 def main():
-    application = webapp.WSGIApplication([('/', Mainpage),('/login',login),('/basketball',basketball),('/volleyball',volleyball),('/soccer',soccer)
+    application = webapp.WSGIApplication([('/', Mainpage),('/login',login),('/logout',logout),('/basketball',basketball),('/sell',sell),('/selldata',selldata),('/volleyball',volleyball),('/soccer',soccer)
                                           ,('/tennis',tennis),('/tabletennis',tabletennis),('/badminton',badminton),('/others',others),('/baseball',baseball)],debug=True)
     util.run_wsgi_app(application)
 
