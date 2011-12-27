@@ -1,0 +1,22 @@
+<html><head><font face="Andalus" color="0000FF" size="60" ><center>E-Sports-Auction</center></font></head>
+	<body>	
+		<center><table width="600" border="10" bordercolor="009900">
+			<th><a href="/sell">Sell</a></th>
+			<th><a href="/buy">Buy</a></th>
+			<th><a href="/login">Log in</a></th>
+			<th><a href="/logout">Log out</a></th>
+			<th><a href="/help">Help</a></th>
+			<th><a href="/myauction">My auction</a></th></table></center><p>
+		<div align=center><font face="MV Boli" size="16"><b>Please choose the category of your product:</b></font></div>
+		<form action="/selldata" method="post">
+		<div align= center> Please choose which kind of thing you want to sell </div>
+			<div><input type=radio name="basketball">basketball</div>
+			<div><input type=radio name="baseball">baseball</div>
+			<div><input type=radio name="volleyball">volleyball</div>
+			<div><input type=radio name="soccer">soccer</div>
+			<div><input type=radio name="tennis">tennis</div>	
+			<div><input type=radio name="tabletennis">tabletennis</div>
+			<div><input type=radio name="badminton">badminton</div>
+			<div><input type=radio name="others">others</div>
+			<div><input type="submit" value="Submit"></div>
+		</form></html>
