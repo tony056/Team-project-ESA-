@@ -1,21 +1,35 @@
 <html><head><font face="Andalus" color="0000FF" size="60" ><center>E-Sports-Auction</center></font></head>
 	<body>	
 <center><table width="600" border="10" bordercolor="009900">
-		<th><a href="">Sell</a></th>
-		<th><a href="">Buy</a></th>
+		<th><a href="/sell">Sell</a></th>
 		<th><a href="/login">Log in</a></th>
 		<th><a href="/logout">Log out</a></th>
-		<th><a href="">Help</a></th>
-		<th><a href="">My auction</a></th></table></center><p>
-	<form action="/selldata" method="post">
-	<div align=center><textarea name="name" row="1" cols="100"></textarea></div>
-	<div align=center><textarea name="lowestprice" row="1" cols="100"></textarea></div>
-	<div align=center><textarea name="new" row="1" cols="100"></textarea></div>
-	<div align=center><textarea name="method" row="1" cols="100"></textarea></div>
-	<div align=center><textarea name="size" row="1" cols="100"></textarea></div>
-	<div align=center><textarea name="text" row="3" cols="100"></textarea></div>
+		<th><a href="/help">Help</a></th>
+		<th><a href="/myauction">My auction</a></th></table></center><p>
+	<div align=center><font face="MV Boli" size="16"><b>Please choose the category of your product:</b></font></div>
+	<form action="/selldata" enctype = "multipart/form-data" method="post">
+		<div align= center> Please choose which kind of thing you want to sell </div>
+			<div><input type=radio name=judge>basketball</div>
+			<div><input type=radio name=judge2>baseball</div>
+			<div><input type=radio name=judge3>volleyball</div>
+			<div><input type=radio name=judge4>soccer</div>
+			<div><input type=radio name=judge5>tennis</div>	
+			<div><input type=radio name=judge6>tabletennis</div>
+			<div><input type=radio name=judge7>badminton</div>
+			<div><input type=radio name=judge8>others</div>
+	<b><font size="10">The name of your product: </font></b><div align=center><textarea name="name" row="1" cols="100"></textarea></div>
+	<b><font size="10">The lowestprice of your product: </font></b><div align=center><textarea name="lowestprice" row="1" cols="100"></textarea></div>
+	<b><font size="10">The damage of your product(<font color="red">new or second-hand</font>): </font></b><div align=center><textarea name="new" row="1" cols="100"></textarea></div>
+	<b><font size="10">The method you want to sell your product: </font></b>
+	<div align=center><textarea name="method" row="1" cols="100"></textarea>
+	<p><font color="red"><b>You can only choose two ways:(1.Mail to your client. 2.face to face)</b></font>
+	</p></div>
+	<b><font size="10">The size of your product: </font></b><div align=center><textarea name="size" row="1" cols="100"></textarea></div>
+	<b><font size="10">The introduction your product: </font></b><div align=center><textarea name="text" row="3" cols="100"></textarea></div>
+	<b><font size="10">Deadline: </font></b><div align=center><textarea name="deadline" row="1" cols="100"></textarea></div>
+	<b><font size="10">Upload the image of your product: </font></b><div align=center><input type="file" name="img"/></input></div>
 	<div align=center><input type="submit" value="Submit"></input></div>
 	</form></body></html>
 	
 	
-	
+
