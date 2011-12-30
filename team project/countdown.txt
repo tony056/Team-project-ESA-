@@ -1,6 +1,5 @@
 <html>
 <bdoy>
-
 <script language="javascript"> 
 var Now=new Date(2011,12-1,29);var Compare=new Date(2012,1-1,3); 
 days=(Compare.getTime()-Now.getTime())/(24*60*60*1000);days=Math.ceil(days);
@@ -9,6 +8,5 @@ document.write("the days left before the deadline:  ");
 document.write("<b>"+days+"</b><br>"); 
 document.write("the hours left before the deadline:   ")
 document.write("<b>"+hours+"</b>");</script>
-
 </body>
 </html>
