@@ -1,0 +1,11 @@
+<html>
+<title>
+E-Sports-Auction
+</title>
+<frameset cols=40%,40%,20%>
+<frame src="sellerdata.txt">
+<frame src="productdata.txt">
+<frame src="buy.txt">
+</frameset>
+
+</html>

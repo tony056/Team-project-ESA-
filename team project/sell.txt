@@ -7,6 +7,10 @@
 		<th><a href="/help">Help</a></th>
 		<th><a href="/myauction">My auction</a></th></table></center><p>
 	<div align=center><font face="MV Boli" size="16"><b>Please choose the category of your product:</b></font></div>
+	
+	
+	
+		
 	<form action="/selldata" enctype = "multipart/form-data" method="post">
 		<div align= center> Please choose which kind of thing you want to sell </div>
 			<div><input type=radio name=judge>basketball</div>
@@ -26,10 +30,12 @@
 	</p></div>
 	<b><font size="10">The size of your product: </font></b><div align=center><textarea name="size" row="1" cols="100"></textarea></div>
 	<b><font size="10">The introduction your product: </font></b><div align=center><textarea name="text" row="3" cols="100"></textarea></div>
-	<b><font size="10">Deadline: </font></b><div align=center><textarea name="deadline" row="1" cols="100"></textarea></div>
 	<b><font size="10">Upload the image of your product: </font></b><div align=center><input type="file" name="img"/></input></div>
+	<b><font size="10">Deadline: </font></b><div align=center><textarea name="deadline" row="1" cols="100"></textarea></div>
 	<div align=center><input type="submit" value="Submit"></input></div>
-	</form></body></html>
+	</form>
+
+	</body></html>
 	
 	
 

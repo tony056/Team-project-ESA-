@@ -22,7 +22,7 @@ from google.appengine.ext import db
 from google.appengine.ext.webapp.util import login_required
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
-
+from google.appengine.api import mail
 
 class Mainpage(webapp.RequestHandler):
     def get(self):
@@ -45,13 +45,118 @@ class login(webapp.RequestHandler):
 class logout(webapp.RequestHandler):
     def get(self):
         self.redirect(users.create_logout_url('/'))
-#class database(db.Model):
-    #name = db.StringProperty()
-    #lowestprice = db.IntegerProperty()
-    #method = db.StringProperty()
-    #new = db.StringProperty()
-    #size = db.FloatProperty()
-    #text = db.TextProperty()
+
+class buybasket(webapp.RequestHandler):
+    def post(self):
+        price=self.request.get('price')
+class product(webapp.RequestHandler):
+    def get(self):
+        productname = self.request.get('product')
+        g = basketdata.all()
+        results = g.fetch(100)
+            
+            #"""<img src="/image?img_id="""+result.key()+""""></img>"""
+            
+        template_values={
+            'g':g,
+            'results':results,
+            'productname':productname,
+            }
+        path = os.path.join(os.path.dirname(__file__),'productdata.txt')
+        self.response.out.write(template.render(path, template_values))
+
+class buy(webapp.RequestHandler):
+  def post(self):
+    productname=self.request.get('name')
+    price=int(self.request.get('price'))
+    p=basketdata.all()
+    re=p.fetch(100)
+    for i in re:
+        if i.name == productname:
+            i.lowestprice=price
+            i.buyer=users.get_current_user()
+            i.put()
+            self.redirect('/basketball')
+    p=basedata.all()
+    re=p.fetch(100)
+    for i in re:
+        if i.name == productname:
+            i.lowestprice=price
+            i.buyer=users.get_current_user()
+            i.put()
+            self.redirect('/baseball')
+    p=volleyballdata.all()
+    re=p.fetch(100)
+    for i in re:
+        if i.name == productname:
+            i.lowestprice=price
+            i.buyer=users.get_current_user()
+            i.put()
+            self.redirect('/volleyball')
+    p=tabletennisdata.all()
+    re=p.fetch(100)
+    for i in re:
+        if i.name == productname:
+            i.lowestprice=price
+            i.buyer=users.get_current_user()
+            i.put()
+            self.redirect('/tabletennis')
+    p=tennisdata.all()
+    re=p.fetch(100)
+    for i in re:
+        if i.name == productname:
+            i.lowestprice=price
+            i.buyer=users.get_current_user()
+            i.put()
+            self.redirect('/tennis')
+    p=othersdata.all()
+    re=p.fetch(100)
+    for i in re:
+        if i.name == productname:
+            i.lowestprice=price
+            i.buyer=users.get_current_user()
+            i.put()
+            self.redirect('/others')
+    p=soccerdata.all()
+    re=p.fetch(100)
+    for i in re:
+        if i.name == productname:
+            i.lowestprice=price
+            i.buyer=users.get_current_user()
+            i.put()
+            self.redirect('/soccer')
+    p=badmintondata.all()
+    re=p.fetch(100)
+    for i in re:
+        if i.name == productname:
+            i.lowestprice=price
+            i.buyer=users.get_current_user()
+            i.put()
+            self.redirect('/badminton')
+class mail (webapp.RequestHandler):
+    def get(self):
+      day=self.request.get('dd')
+      if day == -1:
+          message=mail.EmailMessage(sender="zendo3464@gmail.com",subject="time is up, check if your product was bought or not")
+          message.to= self.request.get('i.author')
+          message.body="""time is up, check if your product was bought or not"""
+          message.send()	
+          message=mail.EmailMessage(sender="zendo3464@gmail.com",subject="time is up, check if you bought the product or not")
+          message.to=self.request.get('i.buyer')
+          message.body="""time is up, check if you bought the product or not"""
+          message.send()
+      path = os.path.join(os.path.dirname(__file__),'productdata.txt')
+      self.response.out.write(template.render(path, template_values))
+         
+class Image (webapp.RequestHandler):
+  def get(self):
+    Imge = db.get(self.request.get("img"))
+    if Imge.image:
+      self.response.headers['Content-Type'] = "image/jpg"
+      self.response.out.write(Imge.image)
+    else:
+      self.response.out.write("No image")
+
 class sell(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
@@ -59,11 +164,13 @@ class sell(webapp.RequestHandler):
             template_values={
         
                 }
-            path = os.path.join(os.path.dirname(__file__), 'sell.txt') 
+            path = os.path.join(os.path.dirname(__file__), 'sell.txt')
             self.response.out.write(template.render(path, template_values))
         else:
           self.redirect(users.create_login_url(self.request.uri))  
 class basketdata(db.Model):
+    num = db.IntegerProperty()
+    num=0
     author = users.get_current_user()
     name = db.StringProperty()
     lowestprice = db.IntegerProperty()
@@ -162,7 +269,6 @@ class othersdata(db.Model):
 class selldata(webapp.RequestHandler):
     def post(self):
         if self.request.get('judge') == "on":
-            self.response.out.write('yes')
             Database=basketdata()
             Database.name=self.request.get('name')
             Database.lowestprice=int(self.request.get('lowestprice'))
@@ -170,8 +276,10 @@ class selldata(webapp.RequestHandler):
             Database.method=self.request.get('method')
             Database.size=float(self.request.get('size'))
             Database.text=self.request.get('text')
-            image=self.request.get('img')
+            Database.deadline=self.request.get('deadline')
+            image = self.request.get('img')
             Database.image = db.Blob(image)
+            Database.num=Database.num+1
             Database.put()
             self.redirect('/basketball')
         elif self.request.get('judge2') == "on":
@@ -182,6 +290,7 @@ class selldata(webapp.RequestHandler):
             Database.method=self.request.get('method')
             Database.size=float(self.request.get('size'))
             Database.text=self.request.get('text')
+            Database.deadline=self.request.get('deadline')
             image=self.request.get('img')
             Database.image = db.Blob(image)
             Database.put()
@@ -194,6 +303,7 @@ class selldata(webapp.RequestHandler):
             Database.method=self.request.get('method')
             Database.size=float(self.request.get('size'))
             Database.text=self.request.get('text')
+            Database.deadline=self.request.get('deadline')
             image=self.request.get('img')
             Database.image = db.Blob(image)
             Database.put()
@@ -206,6 +316,7 @@ class selldata(webapp.RequestHandler):
             Database.method=self.request.get('method')
             Database.size=float(self.request.get('size'))
             Database.text=self.request.get('text')
+            Database.deadline=self.request.get('deadline')
             image=self.request.get('img')
             Database.image = db.Blob(image)
             Database.put()
@@ -218,6 +329,7 @@ class selldata(webapp.RequestHandler):
             Database.method=self.request.get('method')
             Database.size=float(self.request.get('size'))
             Database.text=self.request.get('text')
+            Database.deadline=self.request.get('deadline')
             image=self.request.get('img')
             Database.image = db.Blob(image)
             Database.put()
@@ -230,6 +342,7 @@ class selldata(webapp.RequestHandler):
             Database.method=self.request.get('method')
             Database.size=float(self.request.get('size'))
             Database.text=self.request.get('text')
+            Database.deadline=self.request.get('deadline')
             image=self.request.get('img')
             Database.image = db.Blob(image)
             Database.put()
@@ -242,6 +355,7 @@ class selldata(webapp.RequestHandler):
             Database.method=self.request.get('method')
             Database.size=float(self.request.get('size'))
             Database.text=self.request.get('text')
+            Database.deadline=self.request.get('deadline')
             image=self.request.get('img')
             Database.image = db.Blob(image)
             Database.put()
@@ -254,6 +368,7 @@ class selldata(webapp.RequestHandler):
             Database.method=self.request.get('method')
             Database.size=float(self.request.get('size'))
             Database.text=self.request.get('text')
+            Database.deadline=self.request.get('deadline')
             image=self.request.get('img')
             Database.image = db.Blob(image)
             Database.put()
@@ -262,8 +377,13 @@ class selldata(webapp.RequestHandler):
 #class search(webapp.RequestHandler):
 class basketball(webapp.RequestHandler):
     def get(self):
+        q = basketdata.all()
+        q.order('-name')
+        results = q.fetch(20)
         template_values = {
-            "a":[1,2,5,7]
+            "a":[1,2,5,7],
+            'q':q,
+            'results':results
             }
         
         path = os.path.join(os.path.dirname(__file__), 'basketball.txt')        
@@ -331,7 +451,7 @@ class baseball(webapp.RequestHandler):
         self.response.out.write(template.render(path, template_values))
 def main():
     application = webapp.WSGIApplication([('/', Mainpage),('/login',login),('/logout',logout),('/basketball',basketball),('/sell',sell),('/selldata',selldata),('/volleyball',volleyball),('/soccer',soccer)
-                                          ,('/tennis',tennis),('/tabletennis',tabletennis),('/badminton',badminton),('/others',others),('/baseball',baseball)],debug=True)
+                                          ,('/tennis',tennis),('/tabletennis',tabletennis),('/badminton',badminton),('/others',others),('/image',Image),('/mail',mail),('/buy',buy),('/baseball',baseball),('/product',product)],debug=True)
     util.run_wsgi_app(application)
 
 

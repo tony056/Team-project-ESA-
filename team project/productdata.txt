@@ -1,0 +1,138 @@
+<html>
+<font face="Andalus" color="0000FF" size="60" ><center>E-Sports-Auction</center></font></head>
+                                    <center>
+				    <body onload="clock();return true">
+                                    <table width="600" border="10" bordercolor="009900">
+					<th><a href="/sell">Sell</a></th>
+					<th><a href="/login">Log in</a></th>
+					<th><a href="/logout">Log out</a></th>
+					<th><a href="/help">Help</a></th>
+					<th><a href="/myauction">My auction</a></th>
+					<th><a href="/">Mainpage</a></th></table></center>
+					<p></p>
+				
+                                    
+
+
+<div>
+{% for i in results %}
+            {% ifequal i.name productname %}
+		
+               The present price:{{ i.lowestprice }}<br>
+	       The transcation method: {{i.method}}<br>
+	       The size of the product: {{i.size}}<br>
+	       The condition of the product: {{i.new}}<br>
+	       The name of the product: {{i.name}}<br>
+       	       The name of the seller: {{i.author}}<br>
+	       The highest bidder: {{i.buyer}}
+	
+
+	       Image:<p></p>
+		<a href="/image?img={{i.key}}">image</a>
+	       
+
+</div>
+<head>
+<script language="JavaScript">
+
+var DifferenceHour = -1
+var DifferenceMinute = -1
+var DifferenceSecond = -1
+var Tday = new Date("{{i.deadline}}") 
+var daysms = 24 * 60 * 60 * 1000
+var hoursms = 60 * 60 * 1000
+var Secondms = 60 * 1000
+var microsecond = 1000
+
+function clock()
+{
+var time = new Date()
+var hour = time.getHours()
+var minute = time.getMinutes()
+var second = time.getSeconds()
+var timevalue = ""+((hour > 12) ? hour-12:hour)
+timevalue +=((minute < 10) ? ":0":":")+minute
+timevalue +=((second < 10) ? ":0":":")+second
+timevalue +=((hour >12 ) ? " PM":" AM")
+// document.formnow.now.value = timevalue
+var convertHour = DifferenceHour
+var convertMinute = DifferenceMinute
+var convertSecond = DifferenceSecond
+var Diffms = Tday.getTime() - time.getTime()
+DifferenceHour = Math.floor(Diffms / daysms)
+Diffms -= DifferenceHour * daysms
+DifferenceMinute = Math.floor(Diffms / hoursms)
+Diffms -= DifferenceMinute * hoursms
+DifferenceSecond = Math.floor(Diffms / Secondms)
+Diffms -= DifferenceSecond * Secondms
+var dSecs = Math.floor(Diffms / microsecond)
+if(convertHour != DifferenceHour) document.formnow.dd.value=DifferenceHour
+if(convertMinute != DifferenceMinute) document.formnow.hh.value=DifferenceMinute
+if(convertSecond != DifferenceSecond) document.formnow.mm.value=DifferenceSecond
+document.formnow.ss.value=dSecs
+// document.formnow.Tnow.value= DifferenceHour DifferenceMinute + DifferenceSecond + dSecs
+setTimeout("clock()",1000)
+} 
+
+
+</script>
+</head>
+<div>The name of the product: {{i.name}}<p></p>
+					 The seller of the product: {{i.author}}<p></p>
+					 The presentprice of the product: {{i.lowestprice}}<p></p>
+					 The time left before the deadline:
+
+					 <form name="formnow"><font color=#ff0000 size=4 >
+					 the time left<input type="text" name="dd" size=2> days
+					 <input type="text" name="hh" size=2> hours
+					 <input type="text" name="mm" size=2> minute
+					 <input type="text" name="ss" size=2> seconds<p></p></font></form>
+				
+					 The method how you buy the product: {{i.method}}<p></p>
+					 The status of the product: {{i.new}}<p></p>					 
+					 The size of the product: {{i.size}}<p></p>
+					 The introduction of the product: {{i.text}}<p></p></div>
+				
+
+	    {% endifequal %}
+{% endfor %}
+
+
+
+</div>
+
+<form action="/buy" method="post">
+	<textarea name="name" row="1" cols="10"></textarea>
+	<textarea name="price" row="1" cols="10"></textarea>
+<input type="submit" value="bid"></input></form>
+
+				    
+				    
+
+				    
+				   
+
+				
+                                   
+			    </body>
+
+
+
+
+
+<table width="30" border="10" bordercolor="009900">
+                                    <caption><font face="MV Boli" color="00FF00" size="28">Categories</font></caption>
+                                    <th><button onclick="location.href='/basketball'">Basketball</button></th><tr>
+                                    <th><button onclick="location.href='/baseball'">Baseball</button></th><tr>
+                                    <th><button onclick="location.href='/volleyball'">Volleyball</button></th><tr>
+                                    <th><button onclick="location.href='/soccer'">Soccer</button></th><tr>
+                                    <th><button onclick="location.href='/tennis'">Tennis</button></th><tr>
+                                    <th><button onclick="location.href='/tabletennis'">Table Tennis</button></th><tr>
+                                    <th><button onclick="location.href='/badminton'">Badminton</button></th><tr>
+                                    <th><button onclick="location.href='/others'">Others</button></th><tr>
+                                    
+                                    
+                                    </table></div>
+
+
+</html>
