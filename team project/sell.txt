@@ -5,7 +5,7 @@
 		<th><a href="/login">Log in</a></th>
 		<th><a href="/logout">Log out</a></th>
 		<th><a href="/help">Help</a></th>
-		<th><a href="/myauction">My auction</a></th></table></center><p>
+		<th><a href="/">MainPage</a></th></table></center><p>
 	<div align=center><font face="MV Boli" size="16"><b>Please choose the category of your product:</b></font></div>
 	
 	

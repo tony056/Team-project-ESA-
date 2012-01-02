@@ -4,11 +4,16 @@
 	<b><font face="MV Boli" color="0000FF" size="28"><center>Baseball</center></font></b>
 	<center>
                                     <table width="600" border="10" bordercolor="009900">
-					<th><a href="">Sell</a></th>
-					<th><a href="">Log in</a></th>
-					<th><a href="">Log out</a></th>
-					<th><a href="">Help</a></th>
-					<th><a href="">My auction</a></th></table></center><p></p>
+					<th><a href="/sell">Sell</a></th>
+					<th><a href="/login">Log in</a></th>
+					<th><a href="/logout">Log out</a></th>
+					<th><a href="/help">Help</a></th>
+					<th><a href="/">MainPage</a></th></table></center><p></p>
+
+					<div align=center>
+				    {% for p in results%}
+				    	<a href="/baseproduct?product={{p.name}}">{{p.name}}</a><p></p>
+				    {% endfor %}
 	<table width="30" border="10" bordercolor="009900">
 	<caption><font face="MV Boli" color="00FF00" size="28">Categories</font></caption>
 	 <th><button onclick="location.href='/basketball'">basketball</button></th><tr>					                                     
@@ -18,6 +23,7 @@
 	 <th><button onclick="location.href='/tennis'">Tennis</button></th><tr>
 	 <th><button onclick="location.href='/tabletennis'">Table Tennis</button></th><tr>
 	 <th><button onclick="location.href='/badminton'">Badminton</button></th><tr>
-	 <th><button onclick="location.href='/others'">others</button></th><tr></table>
+	 <th><button onclick="location.href='/others'">others</button></th><tr></table>\
+</div>
 </html>
 

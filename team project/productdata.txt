@@ -28,7 +28,17 @@
 	
 
 	       Image:<p></p>
-		<a href="/image?img={{i.key}}">image</a>
+		<a href="/image?img={{i.key}}">image<p></p></a>
+		<form action="/buy" method="post">
+		<div>
+		The product your are going to bid<br>
+		<textarea name="name" row="1" cols="10">{{productname}}</textarea><p></p>
+		and the amount of the price you are going to bid<br>
+		<textarea name="price" row="1" cols="10"></textarea>
+		</div>
+		
+		
+		<input type="submit" value="bid"></input></form>
 	       
 
 </div>
@@ -101,10 +111,7 @@ setTimeout("clock()",1000)
 
 </div>
 
-<form action="/buy" method="post">
-	<textarea name="name" row="1" cols="10"></textarea>
-	<textarea name="price" row="1" cols="10"></textarea>
-<input type="submit" value="bid"></input></form>
+
 
 				    
 				    

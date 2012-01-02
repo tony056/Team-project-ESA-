@@ -46,16 +46,24 @@ class logout(webapp.RequestHandler):
     def get(self):
         self.redirect(users.create_logout_url('/'))
 
-class buybasket(webapp.RequestHandler):
-    def post(self):
-        price=self.request.get('price')
-class product(webapp.RequestHandler):
+class basketproduct(webapp.RequestHandler):
     def get(self):
         productname = self.request.get('product')
         g = basketdata.all()
         results = g.fetch(100)
             
-            #"""<img src="/image?img_id="""+result.key()+""""></img>"""
+        template_values={
+            'g':g,
+            'results':results,
+            'productname':productname,
+            }
+        path = os.path.join(os.path.dirname(__file__),'productdata.txt')
+        self.response.out.write(template.render(path, template_values))
+class baseproduct(webapp.RequestHandler):
+    def get(self):
+        productname = self.request.get('product')
+        g = basedata.all()
+        results = g.fetch(100)
             
         template_values={
             'g':g,
@@ -65,6 +73,89 @@ class product(webapp.RequestHandler):
         path = os.path.join(os.path.dirname(__file__),'productdata.txt')
         self.response.out.write(template.render(path, template_values))
 
+class volleyballproduct(webapp.RequestHandler):
+    def get(self):
+        productname = self.request.get('product')
+        g = volleyballdata.all()
+        results = g.fetch(100)
+            
+        template_values={
+            'g':g,
+            'results':results,
+            'productname':productname,
+            }
+        path = os.path.join(os.path.dirname(__file__),'productdata.txt')
+        self.response.out.write(template.render(path, template_values))
+
+class tennisproduct(webapp.RequestHandler):
+    def get(self):
+        productname = self.request.get('product')
+        g = tennisdata.all()
+        results = g.fetch(100)
+            
+        template_values={
+            'g':g,
+            'results':results,
+            'productname':productname,
+            }
+        path = os.path.join(os.path.dirname(__file__),'productdata.txt')
+        self.response.out.write(template.render(path, template_values))
+
+class tabletennisproduct(webapp.RequestHandler):
+    def get(self):
+        productname = self.request.get('product')
+        g = tabletennisdata.all()
+        results = g.fetch(100)
+            
+        template_values={
+            'g':g,
+            'results':results,
+            'productname':productname,
+            }
+        path = os.path.join(os.path.dirname(__file__),'productdata.txt')
+        self.response.out.write(template.render(path, template_values))
+
+class soccerproduct(webapp.RequestHandler):
+    def get(self):
+        productname = self.request.get('product')
+        g = soccerdata.all()
+        results = g.fetch(100)
+            
+        template_values={
+            'g':g,
+            'results':results,
+            'productname':productname,
+            }
+        path = os.path.join(os.path.dirname(__file__),'productdata.txt')
+        self.response.out.write(template.render(path, template_values))
+
+class othersproduct(webapp.RequestHandler):
+    def get(self):
+        productname = self.request.get('product')
+        g = othersdata.all()
+        results = g.fetch(100)
+            
+        template_values={
+            'g':g,
+            'results':results,
+            'productname':productname,
+            }
+        path = os.path.join(os.path.dirname(__file__),'productdata.txt')
+        self.response.out.write(template.render(path, template_values))
+
+class badmintonproduct(webapp.RequestHandler):
+    def get(self):
+        productname = self.request.get('product')
+        g = badmintondata.all()
+        results = g.fetch(100)
+            
+        template_values={
+            'g':g,
+            'results':results,
+            'productname':productname,
+            }
+        path = os.path.join(os.path.dirname(__file__),'productdata.txt')
+        self.response.out.write(template.render(path, template_values))
 class buy(webapp.RequestHandler):
   def post(self):
     productname=self.request.get('name')
@@ -136,9 +227,11 @@ class buy(webapp.RequestHandler):
 class mail (webapp.RequestHandler):
     def get(self):
       day=self.request.get('dd')
+      productname=self.request.get(productname)
+      
       if day == -1:
           message=mail.EmailMessage(sender="zendo3464@gmail.com",subject="time is up, check if your product was bought or not")
-          message.to= self.request.get('i.author')
+          message.to= "tony61507@gmail.com"
           message.body="""time is up, check if your product was bought or not"""
           message.send()	
           message=mail.EmailMessage(sender="zendo3464@gmail.com",subject="time is up, check if you bought the product or not")
@@ -147,7 +240,13 @@ class mail (webapp.RequestHandler):
           message.send()
       path = os.path.join(os.path.dirname(__file__),'productdata.txt')
       self.response.out.write(template.render(path, template_values))
-         
+class helpp(webapp.RequestHandler):
+    def get(self):
+        template_values={
+        
+                }
+        path = os.path.join(os.path.dirname(__file__), 'help.txt')
+        self.response.out.write(template.render(path, template_values))
 class Image (webapp.RequestHandler):
   def get(self):
     Imge = db.get(self.request.get("img"))
@@ -391,8 +490,13 @@ class basketball(webapp.RequestHandler):
 
 class volleyball(webapp.RequestHandler):
     def get(self):
+        q = volleyballdata.all()
+        q.order('-name')
+        results = q.fetch(20)
         template_values = {
-            "a":[1,2,5,7]
+            "a":[1,2,5,7],
+            'q':q,
+            'results':results
             }
         
         path = os.path.join(os.path.dirname(__file__), 'volleyball.txt')        
@@ -401,8 +505,13 @@ class volleyball(webapp.RequestHandler):
 
 class soccer(webapp.RequestHandler):
     def get(self):
+        q = soccerdata.all()
+        q.order('-name')
+        results = q.fetch(20)
         template_values = {
-            "a":[1,2,5,7]
+            "a":[1,2,5,7],
+            'q':q,
+            'results':results
             }
         
         path = os.path.join(os.path.dirname(__file__), 'soccer.txt')        
@@ -410,16 +519,26 @@ class soccer(webapp.RequestHandler):
 
 class tennis(webapp.RequestHandler):
     def get(self):
+        q = tennisdata.all()
+        q.order('-name')
+        results = q.fetch(20)
         template_values = {
-            "a":[1,2,5,7]
+            "a":[1,2,5,7],
+            'q':q,
+            'results':results
             }
         
         path = os.path.join(os.path.dirname(__file__), 'tennis.txt')        
         self.response.out.write(template.render(path, template_values))
 class tabletennis(webapp.RequestHandler):
     def get(self):
+        q = tabletennisdata.all()
+        q.order('-name')
+        results = q.fetch(20)
         template_values = {
-            "a":[1,2,5,7]
+            "a":[1,2,5,7],
+            'q':q,
+            'results':results
             }
         
         path = os.path.join(os.path.dirname(__file__), 'tabletennis.txt')        
@@ -427,31 +546,52 @@ class tabletennis(webapp.RequestHandler):
 
 class badminton(webapp.RequestHandler):
     def get(self):
+        q = badmintondata.all()
+        q.order('-name')
+        results = q.fetch(20)
         template_values = {
-            "a":[1,2,5,7]
+            "a":[1,2,5,7],
+            'q':q,
+            'results':results
             }
         
         path = os.path.join(os.path.dirname(__file__), 'badminton.txt')        
         self.response.out.write(template.render(path, template_values))
 class others(webapp.RequestHandler):
     def get(self):
+        q = othersdata.all()
+        q.order('-name')
+        results = q.fetch(20)
         template_values = {
-            "a":[1,2,5,7]
+            "a":[1,2,5,7],
+            'q':q,
+            'results':results
             }
         
         path = os.path.join(os.path.dirname(__file__), 'others.txt')        
         self.response.out.write(template.render(path, template_values))
 class baseball(webapp.RequestHandler):
     def get(self):
+        q = basedata.all()
+        q.order('-name')
+        results = q.fetch(20)
         template_values = {
-            "a":[1,2,5,7]
+            "a":[1,2,5,7],
+            'q':q,
+            'results':results
             }
         
         path = os.path.join(os.path.dirname(__file__), 'baseball.txt')        
         self.response.out.write(template.render(path, template_values))
 def main():
     application = webapp.WSGIApplication([('/', Mainpage),('/login',login),('/logout',logout),('/basketball',basketball),('/sell',sell),('/selldata',selldata),('/volleyball',volleyball),('/soccer',soccer)
-                                          ,('/tennis',tennis),('/tabletennis',tabletennis),('/badminton',badminton),('/others',others),('/image',Image),('/mail',mail),('/buy',buy),('/baseball',baseball),('/product',product)],debug=True)
+                                          ,('/tennis',tennis),('/tabletennis',tabletennis),('/badminton',badminton)
+                                          ,('/others',others),('/image',Image),('/mail',mail),('/buy',buy),('/baseball',baseball),
+                                          ('/help',helpp)
+                                          ,('/basketproduct',basketproduct),('/baseproduct',baseproduct),('/volleyballproduct',volleyballproduct),
+                                          ('/tennisproduct',tennisproduct),
+                                          ('/tabletennisproduct',tabletennisproduct),('/soccerproduct',soccerproduct)
+                                          ,('/badmintonproduct', badmintonproduct),('/othersproduct',othersproduct)],debug=True)
     util.run_wsgi_app(application)
 
 

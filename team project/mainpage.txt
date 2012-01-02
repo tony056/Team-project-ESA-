@@ -5,7 +5,7 @@
 					<th><a href="/login">Log in</a></th>
 					<th><a href="/logout">Log out</a></th>
 					<th><a href="/help">Help</a></th>
-					<th><a href="/myauction">My auction</a></th>
+					
 					<th><a href="/">Mainpage</a></th></table></center>
 					<p></p>
 
