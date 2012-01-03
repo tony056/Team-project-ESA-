@@ -1,0 +1,5 @@
+cron:
+- description: monday morning mailout
+  url: /mail/weekly
+  schedule: every 2 minutes
+  timezone: Asia/Taipei

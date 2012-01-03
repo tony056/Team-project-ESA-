@@ -23,6 +23,8 @@ from google.appengine.ext.webapp.util import login_required
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from google.appengine.api import mail
+from datetime import datetime
+from datetime import timedelta
 
 class Mainpage(webapp.RequestHandler):
     def get(self):
@@ -45,6 +47,8 @@ class login(webapp.RequestHandler):
 class logout(webapp.RequestHandler):
     def get(self):
         self.redirect(users.create_logout_url('/'))
+
+
 
 class basketproduct(webapp.RequestHandler):
     def get(self):
@@ -224,22 +228,51 @@ class buy(webapp.RequestHandler):
             i.buyer=users.get_current_user()
             i.put()
             self.redirect('/badminton')
-class mail (webapp.RequestHandler):
+class mail2(webapp.RequestHandler):
+    def get(self): 
+        mail.send_mail(sender="tony61507@gmail.com",
+              to="zendo3464@gmail.com",
+              subject="Your account has been approved",
+              body="""
+                Dear Albert:
+
+                Your example.com account has been approved.  You can now visit
+                http://www.example.com/ and sign in using your Google Account to
+                access new features.
+
+                Please let us know if you have any questions.
+
+                The example.com Team
+                """)
+        
+class maill(webapp.RequestHandler):
     def get(self):
-      day=self.request.get('dd')
-      productname=self.request.get(productname)
+##        mail.send_mail(sender="tony61507@gmail.com",
+##              to="zendo3464@gmail.com",
+##              subject="Your account has been approved",
+##              body="""
+##                Dear Albert:
+##
+##                Your example.com account has been approved.  You can now visit
+##                http://www.example.com/ and sign in using your Google Account to
+##                access new features.
+##
+##                Please let us know if you have any questions.
+##
+##                The example.com Team
+##                """)
+        day = datetime.now()+timedelta(hours = 8)
+        deadline = basketdata.all().filter("deadline <",day)
+        self.response.out.write(deadline.count())
+        for i in deadline:
+            message=mail.send_mail(sender="tony61507@gmail.com",to= i.author.email(),subject="time is up, check if your product was bought or not"
+                                        ,body="""time is up, check if you bought the product or not""")
+            self.response.out.write(i.author.email())
+            if i.buyer!=None:
+                message=mail.send_mail(sender="tony61507@gmail.com",to= i.buyer.email(),subject="time is up, check if you bought the product or not"
+                                        ,body="""time is up, check if you bought the product or not""")
+                          
       
-      if day == -1:
-          message=mail.EmailMessage(sender="zendo3464@gmail.com",subject="time is up, check if your product was bought or not")
-          message.to= "tony61507@gmail.com"
-          message.body="""time is up, check if your product was bought or not"""
-          message.send()	
-          message=mail.EmailMessage(sender="zendo3464@gmail.com",subject="time is up, check if you bought the product or not")
-          message.to=self.request.get('i.buyer')
-          message.body="""time is up, check if you bought the product or not"""
-          message.send()
-      path = os.path.join(os.path.dirname(__file__),'productdata.txt')
-      self.response.out.write(template.render(path, template_values))
 class helpp(webapp.RequestHandler):
     def get(self):
         template_values={
@@ -270,16 +303,17 @@ class sell(webapp.RequestHandler):
 class basketdata(db.Model):
     num = db.IntegerProperty()
     num=0
-    author = users.get_current_user()
+    author = db.UserProperty()
     name = db.StringProperty()
     lowestprice = db.IntegerProperty()
     method = db.StringProperty()
     new = db.StringProperty()
     size = db.FloatProperty()
     text = db.TextProperty()
-    buyer = users.get_current_user()
+    buyer = db.UserProperty()
     nowtime = db.DateTimeProperty(auto_now_add = True)
-    deadline = db.StringProperty()
+    deadline = db.DateTimeProperty()
+    deadline2 = db.StringProperty()
     image = db.BlobProperty()
 class basedata(db.Model):
     author = users.get_current_user()
@@ -369,13 +403,16 @@ class selldata(webapp.RequestHandler):
     def post(self):
         if self.request.get('judge') == "on":
             Database=basketdata()
+            Database.author=users.get_current_user()
+            Database.buyer=users.get_current_user()
             Database.name=self.request.get('name')
             Database.lowestprice=int(self.request.get('lowestprice'))
             Database.new=self.request.get('new')
             Database.method=self.request.get('method')
             Database.size=float(self.request.get('size'))
             Database.text=self.request.get('text')
-            Database.deadline=self.request.get('deadline')
+            Database.deadline=datetime.strptime(self.request.get('deadline'),"%b %d, %Y %H:%M:%S")
+            Database.deadline2=self.request.get('deadline')
             image = self.request.get('img')
             Database.image = db.Blob(image)
             Database.num=Database.num+1
@@ -586,7 +623,7 @@ class baseball(webapp.RequestHandler):
 def main():
     application = webapp.WSGIApplication([('/', Mainpage),('/login',login),('/logout',logout),('/basketball',basketball),('/sell',sell),('/selldata',selldata),('/volleyball',volleyball),('/soccer',soccer)
                                           ,('/tennis',tennis),('/tabletennis',tabletennis),('/badminton',badminton)
-                                          ,('/others',others),('/image',Image),('/mail',mail),('/buy',buy),('/baseball',baseball),
+                                          ,('/others',others),('/image',Image),('/mail/weekly',maill),('/buy',buy),('/baseball',baseball),('/mail2',mail2),
                                           ('/help',helpp)
                                           ,('/basketproduct',basketproduct),('/baseproduct',baseproduct),('/volleyballproduct',volleyballproduct),
                                           ('/tennisproduct',tennisproduct),
