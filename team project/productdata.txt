@@ -1,5 +1,5 @@
 <html>
-<font face="Andalus" color="0000FF" size="60" ><center>E-Sports-Auction</center></font></head>
+<font face="ALGERIAN" color="00FF00" size="60" ><center>E-Sports-Auction</center></font></head>
                                     <center>
 				    <body onload="clock();return true">
                                     <table width="600" border="10" bordercolor="009900">
@@ -7,7 +7,6 @@
 					<th><a href="/login">Log in</a></th>
 					<th><a href="/logout">Log out</a></th>
 					<th><a href="/help">Help</a></th>
-					<th><a href="/myauction">My auction</a></th>
 					<th><a href="/">Mainpage</a></th></table></center>
 					<p></p>
 				
@@ -17,28 +16,35 @@
 <div>
 {% for i in results %}
             {% ifequal i.name productname %}
-		
-               The present price:{{ i.lowestprice }}<br>
-	       The transcation method: {{i.method}}<br>
-	       The size of the product: {{i.size}}<br>
-	       The condition of the product: {{i.new}}<br>
-	       The name of the product: {{i.name}}<br>
-       	       The name of the seller: {{i.author}}<br>
-	       The highest bidder: {{i.buyer}}
+	       <font size="6">The name of the product: <font color="blue">{{i.name}}</font></font><br><br>
+	       <font size="6">The time left before the deadline:</font>
+
+					 <form name="formnow"><font color=#ff000 size=6 >
+					 <input type="text" name="dd" size=6> days
+					 <input type="text" name="hh" size=6> hours
+					 <input type="text" name="mm" size=6> minute
+					 <input type="text" name="ss" size=6> seconds<p></p></font></form>
+               <font size="6">The present price: <font color="blue">{{ i.lowestprice }}</font></font><br><br>
+	       <font size="6">transcation method: <font color="blue">{{i.method}}</font></font><br><br>
+	       <font size="6">The size of the product: <font color="blue">{{i.size}}</font></font><br><br>
+	       <font size="6">The condition of the product: <font color="blue">{{i.new}}</font></font><br><br>
+	       
+       	       <font size="6">The name of the seller: <font color="blue">{{i.author}}</font></font><br>
+	       <font size="6">The highest bidder: <font color="blue">{{i.buyer}}</font></font><br>
 	
 
-	       Image:<p></p>
-		<a href="/image?img={{i.key}}">image<p></p></a>
-		<form action="/buy" method="post">
-		<div>
-		The product your are going to bid<br>
-		<textarea name="name" row="1" cols="10">{{productname}}</textarea><p></p>
-		and the amount of the price you are going to bid<br>
-		<textarea name="price" row="1" cols="10"></textarea>
+	       <font size="6">Image:
+		<a href="/image?img={{i.key}}">image<p></p></a></font>
+		<center><form action="/buy" method="post">
+		<div><table width=30% height="100" border="5">
+		<th><font size="4">The product your are going to bid:</font></th>
+		<th><textarea name="name" row="1" cols="10">{{productname}}</textarea></th><tr>
+		<th><font size="4">The price you are going to bid:</font></th>
+		<th><textarea name="price" row="1" cols="10"></textarea></th></table>
 		</div>
 		
 		
-		<input type="submit" value="bid"></input></form>
+		<input type="submit" value="bid"></input></form></center>
 	       
 
 </div>
@@ -87,21 +93,11 @@ setTimeout("clock()",1000)
 
 </script>
 </head>
-<div>The name of the product: {{i.name}}<p></p>
-					 The seller of the product: {{i.author}}<p></p>
-					 The presentprice of the product: {{i.lowestprice}}<p></p>
-					 The time left before the deadline:
 
-					 <form name="formnow"><font color=#ff0000 size=4 >
-					 the time left<input type="text" name="dd" size=2> days
-					 <input type="text" name="hh" size=2> hours
-					 <input type="text" name="mm" size=2> minute
-					 <input type="text" name="ss" size=2> seconds<p></p></font></form>
+					 
+					 
 				
-					 The method how you buy the product: {{i.method}}<p></p>
-					 The status of the product: {{i.new}}<p></p>					 
-					 The size of the product: {{i.size}}<p></p>
-					 The introduction of the product: {{i.text}}<p></p></div>
+					 
 				
 
 	    {% endifequal %}
@@ -127,19 +123,19 @@ setTimeout("clock()",1000)
 
 
 
-<table width="30" border="10" bordercolor="009900">
+<center><table width="30" border="10" bordercolor="009900">
                                     <caption><font face="MV Boli" color="00FF00" size="28">Categories</font></caption>
-                                    <th><button onclick="location.href='/basketball'">Basketball</button></th><tr>
-                                    <th><button onclick="location.href='/baseball'">Baseball</button></th><tr>
-                                    <th><button onclick="location.href='/volleyball'">Volleyball</button></th><tr>
-                                    <th><button onclick="location.href='/soccer'">Soccer</button></th><tr>
-                                    <th><button onclick="location.href='/tennis'">Tennis</button></th><tr>
-                                    <th><button onclick="location.href='/tabletennis'">Table Tennis</button></th><tr>
-                                    <th><button onclick="location.href='/badminton'">Badminton</button></th><tr>
-                                    <th><button onclick="location.href='/others'">Others</button></th><tr>
+                                    <th><button onclick="location.href='/basketball'">Basketball</button></th>
+                                    <th><button onclick="location.href='/baseball'">Baseball</button></th>
+                                    <th><button onclick="location.href='/volleyball'">Volleyball</button></th>
+                                    <th><button onclick="location.href='/soccer'">Soccer</button></th>
+                                    <th><button onclick="location.href='/tennis'">Tennis</button></th>
+                                    <th><button onclick="location.href='/tabletennis'">Table Tennis</button></th>
+                                    <th><button onclick="location.href='/badminton'">Badminton</button></th>
+                                    <th><button onclick="location.href='/others'">Others</button></th>
                                     
                                     
-                                    </table></div>
+                                    </table></center>
 
 
 </html>

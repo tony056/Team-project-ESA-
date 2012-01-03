@@ -160,119 +160,232 @@ class badmintonproduct(webapp.RequestHandler):
             }
         path = os.path.join(os.path.dirname(__file__),'productdata.txt')
         self.response.out.write(template.render(path, template_values))
+class stupid(webapp.RequestHandler):
+    def get(self):
+        self.response.out.write("""You are so stupid!! Please enter the bigger number!!<html><button onclick="location.href='/'"><b>Mainpage</b></button></html>""")
+        
 class buy(webapp.RequestHandler):
   def post(self):
-    productname=self.request.get('name')
-    price=int(self.request.get('price'))
-    p=basketdata.all()
-    re=p.fetch(100)
-    for i in re:
-        if i.name == productname:
-            i.lowestprice=price
-            i.buyer=users.get_current_user()
-            i.put()
-            self.redirect('/basketball')
-    p=basedata.all()
-    re=p.fetch(100)
-    for i in re:
-        if i.name == productname:
-            i.lowestprice=price
-            i.buyer=users.get_current_user()
-            i.put()
-            self.redirect('/baseball')
-    p=volleyballdata.all()
-    re=p.fetch(100)
-    for i in re:
-        if i.name == productname:
-            i.lowestprice=price
-            i.buyer=users.get_current_user()
-            i.put()
-            self.redirect('/volleyball')
-    p=tabletennisdata.all()
-    re=p.fetch(100)
-    for i in re:
-        if i.name == productname:
-            i.lowestprice=price
-            i.buyer=users.get_current_user()
-            i.put()
-            self.redirect('/tabletennis')
-    p=tennisdata.all()
-    re=p.fetch(100)
-    for i in re:
-        if i.name == productname:
-            i.lowestprice=price
-            i.buyer=users.get_current_user()
-            i.put()
-            self.redirect('/tennis')
-    p=othersdata.all()
-    re=p.fetch(100)
-    for i in re:
-        if i.name == productname:
-            i.lowestprice=price
-            i.buyer=users.get_current_user()
-            i.put()
-            self.redirect('/others')
-    p=soccerdata.all()
-    re=p.fetch(100)
-    for i in re:
-        if i.name == productname:
-            i.lowestprice=price
-            i.buyer=users.get_current_user()
-            i.put()
-            self.redirect('/soccer')
-    p=badmintondata.all()
-    re=p.fetch(100)
-    for i in re:
-        if i.name == productname:
-            i.lowestprice=price
-            i.buyer=users.get_current_user()
-            i.put()
-            self.redirect('/badminton')
-class mail2(webapp.RequestHandler):
-    def get(self): 
-        mail.send_mail(sender="tony61507@gmail.com",
-              to="zendo3464@gmail.com",
-              subject="Your account has been approved",
-              body="""
-                Dear Albert:
-
-                Your example.com account has been approved.  You can now visit
-                http://www.example.com/ and sign in using your Google Account to
-                access new features.
-
-                Please let us know if you have any questions.
-
-                The example.com Team
-                """)
-        
+    user=users.get_current_user()
+    if user:
+        productname=self.request.get('name')
+        price=int(self.request.get('price'))
+        p=basketdata.all()
+        re=p.fetch(100)
+        for i in re:
+            if i.name == productname:
+                if i.lowestprice < price:
+                    i.lowestprice=price
+                    i.buyer=users.get_current_user()
+                    i.put()
+                    self.redirect('/basketball')
+                else:
+                    self.redirect('/stupid')
+        p=basedata.all()
+        re=p.fetch(100)
+        for i in re:
+            if i.name == productname:
+                i.lowestprice=price
+                i.buyer=users.get_current_user()
+                i.put()
+                self.redirect('/baseball')
+        p=volleyballdata.all()
+        re=p.fetch(100)
+        for i in re:
+            if i.name == productname:
+                i.lowestprice=price
+                i.buyer=users.get_current_user()
+                i.put()
+                self.redirect('/volleyball')
+        p=tabletennisdata.all()
+        re=p.fetch(100)
+        for i in re:
+            if i.name == productname:
+                i.lowestprice=price
+                i.buyer=users.get_current_user()
+                i.put()
+                self.redirect('/tabletennis')
+        p=tennisdata.all()
+        re=p.fetch(100)
+        for i in re:
+            if i.name == productname:
+                i.lowestprice=price
+                i.buyer=users.get_current_user()
+                i.put()
+                self.redirect('/tennis')
+        p=othersdata.all()
+        re=p.fetch(100)
+        for i in re:
+            if i.name == productname:
+                i.lowestprice=price
+                i.buyer=users.get_current_user()
+                i.put()
+                self.redirect('/others')
+        p=soccerdata.all()
+        re=p.fetch(100)
+        for i in re:
+            if i.name == productname:
+                i.lowestprice=price
+                i.buyer=users.get_current_user()
+                i.put()
+                self.redirect('/soccer')
+        p=badmintondata.all()
+        re=p.fetch(100)
+        for i in re:
+            if i.name == productname:
+                i.lowestprice=price
+                i.buyer=users.get_current_user()
+                i.put()
+                self.redirect('/badminton')
+    else:
+        self.redirect('/login')
 class maill(webapp.RequestHandler):
     def get(self):
-##        mail.send_mail(sender="tony61507@gmail.com",
-##              to="zendo3464@gmail.com",
-##              subject="Your account has been approved",
-##              body="""
-##                Dear Albert:
-##
-##                Your example.com account has been approved.  You can now visit
-##                http://www.example.com/ and sign in using your Google Account to
-##                access new features.
-##
-##                Please let us know if you have any questions.
-##
-##                The example.com Team
-##                """)
         day = datetime.now()+timedelta(hours = 8)
         deadline = basketdata.all().filter("deadline <",day)
-        self.response.out.write(deadline.count())
         for i in deadline:
-            message=mail.send_mail(sender="tony61507@gmail.com",to= i.author.email(),subject="time is up, check if your product was bought or not"
-                                        ,body="""time is up, check if you bought the product or not""")
-            self.response.out.write(i.author.email())
-            if i.buyer!=None:
-                message=mail.send_mail(sender="tony61507@gmail.com",to= i.buyer.email(),subject="time is up, check if you bought the product or not"
-                                        ,body="""time is up, check if you bought the product or not""")
-                          
-      
+            if i.buyer == i.author:
+                message=mail.send_mail(sender="tony61507@gmail.com",to= i.author.email(),subject="Time is up, there is no one want to buy your product!"
+                                        ,body="""Dear """+ i.author.email()+""":
+                                                    I am one of founders of the "E-Sports-Auction". I am sorry about that your product is still unmarketable.
+                                                Maybe your can try to sell it again. Thank you for coming!! """)
+                i.delete()
+            else: 
+                message=mail.send_mail(sender="tony61507@gmail.com",to= i.author.email(),subject="Congratulations!!!"
+                                        ,body="""Dear """+i.author.email()+""":
+                                                    I am one of founders of the "E-Sports-Auction".Time is up! The user:"""+i.buyer.email()+""" wants to buy your product.
+                                                 You can discuss the details of the deal now. Thank you for coming!!""")
+                message=mail.send_mail(sender="tony61507@gmail.com",to= i.buyer.email(),subject="Congratulations!!!"
+                                        ,body="""Dear """+i.author.email()+""":
+                                                    I am one of founders of the "E-Sports-Auction".Time is up! The user:"""+i.author.email()+""" can complete the transaction
+                                                 with you. You can discuss the details of the deal now. Thank you for coming!!""")
+                i.delete()
+        deadline = basedata.all().filter("deadline <",day)
+        for i in deadline:
+            if i.buyer == i.author:
+                message=mail.send_mail(sender="tony61507@gmail.com",to= i.author.email(),subject="Time is up, there is no one want to buy your product!"
+                                        ,body="""Dear """+ i.author.email()+""":
+                                                    I am one of founders of the "E-Sports-Auction". I am sorry about that your product is still unmarketable.
+                                                Maybe your can try to sell it again. Thank you for coming!! """)
+                i.delete()
+            else: 
+                message=mail.send_mail(sender="tony61507@gmail.com",to= i.author.email(),subject="Congratulations!!!"
+                                        ,body="""Dear """+i.author.email()+""":
+                                                    I am one of founders of the "E-Sports-Auction".Time is up! The user:"""+i.buyer.email()+""" wants to buy your product.
+                                                 You can discuss the details of the deal now. Thank you for coming!!""")
+                message=mail.send_mail(sender="tony61507@gmail.com",to= i.buyer.email(),subject="Congratulations!!!"
+                                        ,body="""Dear """+i.author.email()+""":
+                                                    I am one of founders of the "E-Sports-Auction".Time is up! The user:"""+i.author.email()+""" can complete the transaction
+                                                 with you. You can discuss the details of the deal now. Thank you for coming!!""")
+                i.delete()
+        deadline = badmintondata.all().filter("deadline <",day)
+        for i in deadline:
+            if i.buyer == i.author:
+                message=mail.send_mail(sender="tony61507@gmail.com",to= i.author.email(),subject="Time is up, there is no one want to buy your product!"
+                                        ,body="""Dear """+ i.author.email()+""":
+                                                    I am one of founders of the "E-Sports-Auction". I am sorry about that your product is still unmarketable.
+                                                Maybe your can try to sell it again. Thank you for coming!! """)
+                i.delete()
+            else: 
+                message=mail.send_mail(sender="tony61507@gmail.com",to= i.author.email(),subject="Congratulations!!!"
+                                        ,body="""Dear """+i.author.email()+""":
+                                                    I am one of founders of the "E-Sports-Auction".Time is up! The user:"""+i.buyer.email()+""" wants to buy your product.
+                                                 You can discuss the details of the deal now. Thank you for coming!!""")
+                message=mail.send_mail(sender="tony61507@gmail.com",to= i.buyer.email(),subject="Congratulations!!!"
+                                        ,body="""Dear """+i.author.email()+""":
+                                                    I am one of founders of the "E-Sports-Auction".Time is up! The user:"""+i.author.email()+""" can complete the transaction
+                                                 with you. You can discuss the details of the deal now. Thank you for coming!!""")
+                i.delete()
+        deadline = volleyballdata.all().filter("deadline <",day)
+        for i in deadline:
+            if i.buyer == i.author:
+                message=mail.send_mail(sender="tony61507@gmail.com",to= i.author.email(),subject="Time is up, there is no one want to buy your product!"
+                                        ,body="""Dear """+ i.author.email()+""":
+                                                    I am one of founders of the "E-Sports-Auction". I am sorry about that your product is still unmarketable.
+                                                Maybe your can try to sell it again. Thank you for coming!! """)
+                i.delete()
+            else: 
+                message=mail.send_mail(sender="tony61507@gmail.com",to= i.author.email(),subject="Congratulations!!!"
+                                        ,body="""Dear """+i.author.email()+""":
+                                                    I am one of founders of the "E-Sports-Auction".Time is up! The user:"""+i.buyer.email()+""" wants to buy your product.
+                                                 You can discuss the details of the deal now. Thank you for coming!!""")
+                message=mail.send_mail(sender="tony61507@gmail.com",to= i.buyer.email(),subject="Congratulations!!!"
+                                        ,body="""Dear """+i.author.email()+""":
+                                                    I am one of founders of the "E-Sports-Auction".Time is up! The user:"""+i.author.email()+""" can complete the transaction
+                                                 with you. You can discuss the details of the deal now. Thank you for coming!!""")
+                i.delete()
+        deadline = tennisdata.all().filter("deadline <",day)
+        for i in deadline:
+            if i.buyer == i.author:
+                message=mail.send_mail(sender="tony61507@gmail.com",to= i.author.email(),subject="Time is up, there is no one want to buy your product!"
+                                        ,body="""Dear """+ i.author.email()+""":
+                                                    I am one of founders of the "E-Sports-Auction". I am sorry about that your product is still unmarketable.
+                                                Maybe your can try to sell it again. Thank you for coming!! """)
+                i.delete()
+            else: 
+                message=mail.send_mail(sender="tony61507@gmail.com",to= i.author.email(),subject="Congratulations!!!"
+                                        ,body="""Dear """+i.author.email()+""":
+                                                    I am one of founders of the "E-Sports-Auction".Time is up! The user:"""+i.buyer.email()+""" wants to buy your product.
+                                                 You can discuss the details of the deal now. Thank you for coming!!""")
+                message=mail.send_mail(sender="tony61507@gmail.com",to= i.buyer.email(),subject="Congratulations!!!"
+                                        ,body="""Dear """+i.author.email()+""":
+                                                    I am one of founders of the "E-Sports-Auction".Time is up! The user:"""+i.author.email()+""" can complete the transaction
+                                                 with you. You can discuss the details of the deal now. Thank you for coming!!""")
+                i.delete()
+        deadline = tabletennisdata.all().filter("deadline <",day)
+        for i in deadline:
+            if i.buyer == i.author:
+                message=mail.send_mail(sender="tony61507@gmail.com",to= i.author.email(),subject="Time is up, there is no one want to buy your product!"
+                                        ,body="""Dear """+ i.author.email()+""":
+                                                    I am one of founders of the "E-Sports-Auction". I am sorry about that your product is still unmarketable.
+                                                Maybe your can try to sell it again. Thank you for coming!! """)
+                i.delete()
+            else: 
+                message=mail.send_mail(sender="tony61507@gmail.com",to= i.author.email(),subject="Congratulations!!!"
+                                        ,body="""Dear """+i.author.email()+""":
+                                                    I am one of founders of the "E-Sports-Auction".Time is up! The user:"""+i.buyer.email()+""" wants to buy your product.
+                                                 You can discuss the details of the deal now. Thank you for coming!!""")
+                message=mail.send_mail(sender="tony61507@gmail.com",to= i.buyer.email(),subject="Congratulations!!!"
+                                        ,body="""Dear """+i.author.email()+""":
+                                                    I am one of founders of the "E-Sports-Auction".Time is up! The user:"""+i.author.email()+""" can complete the transaction
+                                                 with you. You can discuss the details of the deal now. Thank you for coming!!""")
+                i.delete()
+        deadline = soccerdata.all().filter("deadline <",day)
+        for i in deadline:
+            if i.buyer == i.author:
+                message=mail.send_mail(sender="tony61507@gmail.com",to= i.author.email(),subject="Time is up, there is no one want to buy your product!"
+                                        ,body="""Dear """+ i.author.email()+""":
+                                                    I am one of founders of the "E-Sports-Auction". I am sorry about that your product is still unmarketable.
+                                                Maybe your can try to sell it again. Thank you for coming!! """)
+                i.delete()
+            else: 
+                message=mail.send_mail(sender="tony61507@gmail.com",to= i.author.email(),subject="Congratulations!!!"
+                                        ,body="""Dear """+i.author.email()+""":
+                                                    I am one of founders of the "E-Sports-Auction".Time is up! The user:"""+i.buyer.email()+""" wants to buy your product.
+                                                 You can discuss the details of the deal now. Thank you for coming!!""")
+                message=mail.send_mail(sender="tony61507@gmail.com",to= i.buyer.email(),subject="Congratulations!!!"
+                                        ,body="""Dear """+i.author.email()+""":
+                                                    I am one of founders of the "E-Sports-Auction".Time is up! The user:"""+i.author.email()+""" can complete the transaction
+                                                 with you. You can discuss the details of the deal now. Thank you for coming!!""")
+                i.delete()
+        deadline = othersdata.all().filter("deadline <",day)
+        for i in deadline:
+            if i.buyer == i.author:
+                message=mail.send_mail(sender="tony61507@gmail.com",to= i.author.email(),subject="Time is up, there is no one want to buy your product!"
+                                        ,body="""Dear """+ i.author.email()+""":
+                                                    I am one of founders of the "E-Sports-Auction". I am sorry about that your product is still unmarketable.
+                                                Maybe your can try to sell it again. Thank you for coming!! """)
+                i.delete()
+            else: 
+                message=mail.send_mail(sender="tony61507@gmail.com",to= i.author.email(),subject="Congratulations!!!"
+                                        ,body="""Dear """+i.author.email()+""":
+                                                    I am one of founders of the "E-Sports-Auction".Time is up! The user:"""+i.buyer.email()+""" wants to buy your product.
+                                                 You can discuss the details of the deal now. Thank you for coming!!""")
+                message=mail.send_mail(sender="tony61507@gmail.com",to= i.buyer.email(),subject="Congratulations!!!"
+                                        ,body="""Dear """+i.author.email()+""":
+                                                    I am one of founders of the "E-Sports-Auction".Time is up! The user:"""+i.author.email()+""" can complete the transaction
+                                                 with you. You can discuss the details of the deal now. Thank you for coming!!""")
+                i.delete()
 class helpp(webapp.RequestHandler):
     def get(self):
         template_values={
@@ -288,7 +401,6 @@ class Image (webapp.RequestHandler):
       self.response.out.write(Imge.image)
     else:
       self.response.out.write("No image")
-
 class sell(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
@@ -316,88 +428,95 @@ class basketdata(db.Model):
     deadline2 = db.StringProperty()
     image = db.BlobProperty()
 class basedata(db.Model):
-    author = users.get_current_user()
+    author = db.UserProperty()
     name = db.StringProperty()
     lowestprice = db.IntegerProperty()
     method = db.StringProperty()
     new = db.StringProperty()
     size = db.FloatProperty()
     text = db.TextProperty()
-    buyer = users.get_current_user()
+    buyer = db.UserProperty()
     nowtime = db.DateTimeProperty(auto_now_add = True)
-    deadline = db.StringProperty()
+    deadline = db.DateTimeProperty()
+    deadline2 = db.StringProperty()
     image = db.BlobProperty()
 class badmintondata(db.Model):
-    author = users.get_current_user()
+    author = db.UserProperty()
     name = db.StringProperty()
     lowestprice = db.IntegerProperty()
     method = db.StringProperty()
     new = db.StringProperty()
     size = db.FloatProperty()
     text = db.TextProperty()
-    buyer = users.get_current_user()
+    buyer = db.UserProperty()
     nowtime = db.DateTimeProperty(auto_now_add = True)
-    deadline = db.StringProperty()
+    deadline = db.DateTimeProperty()
+    deadline2 = db.StringProperty()
     image = db.BlobProperty()
 class tennisdata(db.Model):
-    author = users.get_current_user()
+    author = db.UserProperty()
     name = db.StringProperty()
     lowestprice = db.IntegerProperty()
     method = db.StringProperty()
     new = db.StringProperty()
     size = db.FloatProperty()
     text = db.TextProperty()
-    buyer = users.get_current_user()
+    buyer = db.UserProperty()
     nowtime = db.DateTimeProperty(auto_now_add = True)
-    deadline = db.StringProperty()
+    deadline = db.DateTimeProperty()
+    deadline2 = db.StringProperty()
     image = db.BlobProperty()
 class tabletennisdata(db.Model):
-    author = users.get_current_user()
+    author = db.UserProperty()
     name = db.StringProperty()
     lowestprice = db.IntegerProperty()
     method = db.StringProperty()
     new = db.StringProperty()
     size = db.FloatProperty()
     text = db.TextProperty()
-    buyer = users.get_current_user()
+    buyer = db.UserProperty()
     nowtime = db.DateTimeProperty(auto_now_add = True)
-    deadline = db.StringProperty()
+    deadline = db.DateTimeProperty()
+    deadline2 = db.StringProperty()
     image = db.BlobProperty()
 class soccerdata(db.Model):
-    author = users.get_current_user()
+    author = db.UserProperty()
     name = db.StringProperty()
     lowestprice = db.IntegerProperty()
     method = db.StringProperty()
     new = db.StringProperty()
     size = db.FloatProperty()
     text = db.TextProperty()
-    buyer = users.get_current_user()
+    buyer = db.UserProperty()
     nowtime = db.DateTimeProperty(auto_now_add = True)
-    deadline = db.StringProperty()
+    deadline = db.DateTimeProperty()
+    deadline2 = db.StringProperty()
     image = db.BlobProperty()
 class volleyballdata(db.Model):
-    author = users.get_current_user()
+    author = db.UserProperty()
     name = db.StringProperty()
     lowestprice = db.IntegerProperty()
     method = db.StringProperty()
     new = db.StringProperty()
     size = db.FloatProperty()
     text = db.TextProperty()
-    buyer = users.get_current_user()
+    buyer = db.UserProperty()
     nowtime = db.DateTimeProperty(auto_now_add = True)
-    deadline = db.StringProperty()
+    deadline = db.DateTimeProperty()
+    deadline2 = db.StringProperty()
     image = db.BlobProperty()
 class othersdata(db.Model):
-    author = users.get_current_user()
+    author = db.UserProperty()
     name = db.StringProperty()
     lowestprice = db.IntegerProperty()
     method = db.StringProperty()
     new = db.StringProperty()
     size = db.FloatProperty()
     text = db.TextProperty()
-    buyer = users.get_current_user()
+    buyer = db.UserProperty()
     nowtime = db.DateTimeProperty(auto_now_add = True)
-    deadline = db.StringProperty()
+    deadline = db.DateTimeProperty()
+    deadline2 = db.StringProperty()
     image = db.BlobProperty()
 class selldata(webapp.RequestHandler):
     def post(self):
@@ -420,91 +539,112 @@ class selldata(webapp.RequestHandler):
             self.redirect('/basketball')
         elif self.request.get('judge2') == "on":
             Database=basedata()
+            Database.author=users.get_current_user()
+            Database.buyer=users.get_current_user()
             Database.name=self.request.get('name')
             Database.lowestprice=int(self.request.get('lowestprice'))
             Database.new=self.request.get('new')
             Database.method=self.request.get('method')
             Database.size=float(self.request.get('size'))
             Database.text=self.request.get('text')
-            Database.deadline=self.request.get('deadline')
+            Database.deadline=datetime.strptime(self.request.get('deadline'),"%b %d, %Y %H:%M:%S")
+            Database.deadline2=self.request.get('deadline')
             image=self.request.get('img')
             Database.image = db.Blob(image)
             Database.put()
             self.redirect('/baseball')
         elif self.request.get('judge7') == "on":
             Database=badmintondata()
+            Database.author=users.get_current_user()
+            Database.buyer=users.get_current_user()
             Database.name=self.request.get('name')
             Database.lowestprice=int(self.request.get('lowestprice'))
             Database.new=self.request.get('new')
             Database.method=self.request.get('method')
             Database.size=float(self.request.get('size'))
             Database.text=self.request.get('text')
-            Database.deadline=self.request.get('deadline')
+            Database.deadline=datetime.strptime(self.request.get('deadline'),"%b %d, %Y %H:%M:%S")
+            Database.deadline2=self.request.get('deadline')
             image=self.request.get('img')
             Database.image = db.Blob(image)
             Database.put()
             self.redirect('/badminton')
         elif self.request.get('judge4') == "on":
             Database=soccerdata()
+            Database.author=users.get_current_user()
+            Database.buyer=users.get_current_user()
             Database.name=self.request.get('name')
             Database.lowestprice=int(self.request.get('lowestprice'))
             Database.new=self.request.get('new')
             Database.method=self.request.get('method')
             Database.size=float(self.request.get('size'))
             Database.text=self.request.get('text')
-            Database.deadline=self.request.get('deadline')
+            Database.deadline=datetime.strptime(self.request.get('deadline'),"%b %d, %Y %H:%M:%S")
+            Database.deadline2=self.request.get('deadline')
             image=self.request.get('img')
             Database.image = db.Blob(image)
             Database.put()
             self.redirect('/soccer')
         elif self.request.get('judge3') == "on":
             Database=volleyballdata()
+            Database.author=users.get_current_user()
+            Database.buyer=users.get_current_user()
             Database.name=self.request.get('name')
             Database.lowestprice=int(self.request.get('lowestprice'))
             Database.new=self.request.get('new')
             Database.method=self.request.get('method')
             Database.size=float(self.request.get('size'))
             Database.text=self.request.get('text')
-            Database.deadline=self.request.get('deadline')
+            Database.deadline=datetime.strptime(self.request.get('deadline'),"%b %d, %Y %H:%M:%S")
+            Database.deadline2=self.request.get('deadline')
             image=self.request.get('img')
             Database.image = db.Blob(image)
             Database.put()
             self.redirect('/volleyball')
         elif self.request.get('judge5') == "on":
             Database=tennisdata()
+            Database.author=users.get_current_user()
+            Database.buyer=users.get_current_user()
             Database.name=self.request.get('name')
             Database.lowestprice=int(self.request.get('lowestprice'))
             Database.new=self.request.get('new')
             Database.method=self.request.get('method')
             Database.size=float(self.request.get('size'))
             Database.text=self.request.get('text')
-            Database.deadline=self.request.get('deadline')
+            Database.deadline=datetime.strptime(self.request.get('deadline'),"%b %d, %Y %H:%M:%S")
+            Database.deadline2=self.request.get('deadline')
             image=self.request.get('img')
             Database.image = db.Blob(image)
             Database.put()
             self.redirect('/tennis')
         elif self.request.get('judge6') == "on":
             Database=tabletennisdata()
+            Database.author=users.get_current_user()
+            Database.buyer=users.get_current_user()
             Database.name=self.request.get('name')
             Database.lowestprice=int(self.request.get('lowestprice'))
             Database.new=self.request.get('new')
             Database.method=self.request.get('method')
             Database.size=float(self.request.get('size'))
             Database.text=self.request.get('text')
-            Database.deadline=self.request.get('deadline')
+            Database.deadline=datetime.strptime(self.request.get('deadline'),"%b %d, %Y %H:%M:%S")
+            Database.deadline2=self.request.get('deadline')
             image=self.request.get('img')
             Database.image = db.Blob(image)
             Database.put()
             self.redirect('/tabletennis')
         elif self.request.get('judge8') == "on":
             Database=othersdata()
+            Database.author=users.get_current_user()
+            Database.buyer=users.get_current_user()
             Database.name=self.request.get('name')
             Database.lowestprice=int(self.request.get('lowestprice'))
             Database.new=self.request.get('new')
             Database.method=self.request.get('method')
             Database.size=float(self.request.get('size'))
             Database.text=self.request.get('text')
-            Database.deadline=self.request.get('deadline')
+            Database.deadline=datetime.strptime(self.request.get('deadline'),"%b %d, %Y %H:%M:%S")
+            Database.deadline2=self.request.get('deadline')
             image=self.request.get('img')
             Database.image = db.Blob(image)
             Database.put()
@@ -623,7 +763,7 @@ class baseball(webapp.RequestHandler):
 def main():
     application = webapp.WSGIApplication([('/', Mainpage),('/login',login),('/logout',logout),('/basketball',basketball),('/sell',sell),('/selldata',selldata),('/volleyball',volleyball),('/soccer',soccer)
                                           ,('/tennis',tennis),('/tabletennis',tabletennis),('/badminton',badminton)
-                                          ,('/others',others),('/image',Image),('/mail/weekly',maill),('/buy',buy),('/baseball',baseball),('/mail2',mail2),
+                                          ,('/others',others),('/image',Image),('/mail/weekly',maill),('/buy',buy),('/baseball',baseball),('/stupid',stupid),
                                           ('/help',helpp)
                                           ,('/basketproduct',basketproduct),('/baseproduct',baseproduct),('/volleyballproduct',volleyballproduct),
                                           ('/tennisproduct',tennisproduct),

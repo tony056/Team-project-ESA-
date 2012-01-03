@@ -1,18 +1,14 @@
-<html><head><font face="Andalus" color="0000FF" size="60" ><center>E-Sports-Auction</center></font></head>
+<html><head><font face="ALGERIAN" color="#00FF00" size="60" ><center>E-Sports-Auction</center></font></head>
+			<head><font face="Andalus" size="30" color="0000FF"><center>Sell</center></font></head>
 	<body>	
-<center><table width="600" border="10" bordercolor="009900">
+<center><table width="600" border="10" bordercolor="7CFC00">
 		<th><a href="/sell">Sell</a></th>
 		<th><a href="/login">Log in</a></th>
 		<th><a href="/logout">Log out</a></th>
 		<th><a href="/help">Help</a></th>
-		<th><a href="/">MainPage</a></th></table></center><p>
-	<div align=center><font face="MV Boli" size="16"><b>Please choose the category of your product:</b></font></div>
-	
-	
-	
-		
+		<th><a href="/">MainPage</a></th></table></center><p>	
 	<form action="/selldata" enctype = "multipart/form-data" method="post">
-		<div align= center> Please choose which kind of thing you want to sell </div>
+			<div><font face="MV Boli" size="5"><b>Please choose the category of your product:</b></font></div>	
 			<div><input type=radio name=judge>basketball</div>
 			<div><input type=radio name=judge2>baseball</div>
 			<div><input type=radio name=judge3>volleyball</div>
@@ -21,17 +17,17 @@
 			<div><input type=radio name=judge6>tabletennis</div>
 			<div><input type=radio name=judge7>badminton</div>
 			<div><input type=radio name=judge8>others</div>
-	<b><font size="10">The name of your product: </font></b><div align=center><textarea name="name" row="1" cols="100"></textarea></div>
-	<b><font size="10">The lowestprice of your product: </font></b><div align=center><textarea name="lowestprice" row="1" cols="100"></textarea></div>
-	<b><font size="10">The damage of your product(<font color="red">new or second-hand</font>): </font></b><div align=center><textarea name="new" row="1" cols="100"></textarea></div>
-	<b><font size="10">The method you want to sell your product: </font></b>
-	<div align=center><textarea name="method" row="1" cols="100"></textarea>
-	<p><font color="red"><b>You can only choose two ways:(1.Mail to your client. 2.face to face)</b></font>
+	<b><font face="MV Boli" size="5">The name of your product: </font></b><br><div><textarea name="name" row="0.1" cols="50"></textarea></div>
+	<b><font face="MV Boli" size="5">The lowestprice of your product: </font></b><div><textarea name="lowestprice" row="1" cols="20"></textarea></div>
+	<b><font face="MV Boli" size="5">The extent of damage(<font color="red">new or second-hand</font>): </font></b><div><textarea name="new" row="1" cols="10"></textarea></div>
+	<b><font face="MV Boli" size="5">The method you want to sell your product: </font></b>
+	<div><textarea name="method" row="1" cols="20"></textarea>
+	<p><font color="red"><b>You can only choose two ways:(1.Mail to your client. 2.Give to your client personally)</b></font>
 	</p></div>
-	<b><font size="10">The size of your product: </font></b><div align=center><textarea name="size" row="1" cols="100"></textarea></div>
-	<b><font size="10">The introduction your product: </font></b><div align=center><textarea name="text" row="3" cols="100"></textarea></div>
-	<b><font size="10">Upload the image of your product: </font></b><div align=center><input type="file" name="img"/></input></div>
-	<b><font size="10">Deadline: </font></b><div align=center><textarea name="deadline" row="1" cols="100"></textarea></div>
+	<b><font face="MV Boli" size="5">The size of your product (Please enter number EX.7): </font></b><div><textarea name="size" row="1" cols="5"></textarea></div>
+	<b><font face="MV Boli" size="5">The introduction your product: </font></b><div align=center><textarea name="text" row="5" cols="50"></textarea></div>
+	<b><font face="MV Boli" size="5">Upload the image of your product: </font></b><div align=center><input type="file" name="img"/></input></div>
+	<b><font face="MV Boli" size="5">Deadline (Please enter like <font color="red">Jan 3, 2012 14:20:00</font>): </font></b><div align=center><textarea name="deadline" row="1" cols="30"></textarea></div>
 	<div align=center><input type="submit" value="Submit"></input></div>
 	</form>
 

@@ -1,28 +1,28 @@
-<html><head><font face="Andalus" color="0000FF" size="60" ><center>E-Sports-Auction</center></font></head>
+<html><head><font face="ALGERIAN" color="00FF00" size="60" ><center>E-Sports-Auction</center></font></head>
                                     <head><font face="Andalus" color="0000FF" size="30"><center>soccer</center></font></head>
                                     <center>
-                                    <table width="600" border="10" bordercolor="009900">
+                                    <table width="600" border="10" bordercolor="7CFC00">
 					<th><a href="/sell">Sell</a></th>
 					<th><a href="/login">Log in</a></th>
 					<th><a href="/logout">Log out</a></th>
 					<th><a href="/help">Help</a></th>
 					<th><a href="/">MainPage</a></th></table></center><p></p>
                                     <div align=center>
-
-
+					<table width=30% height=50 border="5">
 				    {% for p in results%}
-				    	<a href="/soccerproduct?product={{p.name}}">{{p.name}}</a><p></p>
+				    	<th>Product name:</th><th><a href="/soccerproduct?product={{p.name}}">{{p.name}}</a></th></tr>
 				    {% endfor %}
-                                    <table width="30" border="10" bordercolor="009900">
+				    </table>
+                                    <table width="30" border="10" bordercolor="00FF00">
                                     <caption><font face="MV Boli" color="00FF00" size="28">Categories</font></caption>
-                                    <th><button onclick="location.href='/basketball'">Basketball</button></th><tr>
-                                    <th><button onclick="location.href='/baseball'">Baseball</button></th><tr>
-                                    <th><button onclick="location.href='/volleyball'">Volleyball</button></th><tr>
-                                    <th><button onclick="location.href='/soccer'">Soccer</button></th><tr>
-                                    <th><button onclick="location.href='/tennis'">Tennis</button></th><tr>
-                                    <th><button onclick="location.href='/tabletennis'">Table Tennis</button></th><tr>
-                                    <th><button onclick="location.href='/badminton'">Badminton</button></th><tr>
-                                    <th><button onclick="location.href='/others'">Others</button></th><tr>
+                                    <th><button onclick="location.href='/basketball'"><b>Basketball</b></button></th><tr>
+                                    <th><button onclick="location.href='/baseball'"><b>Baseball</b></button></th><tr>
+                                    <th><button onclick="location.href='/volleyball'"><b>Volleyball</b></button></th><tr>
+                                    <th><button onclick="location.href='/soccer'"><b>Soccer</b></button></th><tr>
+                                    <th><button onclick="location.href='/tennis'"><b>Tennis</b></button></th><tr>
+                                    <th><button onclick="location.href='/tabletennis'"><b>Table Tennis</b></button></th><tr>
+                                    <th><button onclick="location.href='/badminton'"><b>Badminton</b></button></th><tr>
+                                    <th><button onclick="location.href='/others'"><b>Others</b></button></th><tr>
                                     
                                     
                                     </table></div>

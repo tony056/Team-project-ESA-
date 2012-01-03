@@ -9,12 +9,29 @@
 
 <marquee onMouseOver="this.stop()" onMouseOut="this.start()" bgcolor="#aaff00" scrollamount="5" behavior="alternate">Welcome to the <b>HELP</b> service</marquee>
 
-<div align=center>
+<div align=left>
 <b><font face="MV Boli" color="00FF00" size="6">SELL:</font></b><br>
-<font color="0000ff" size="4">If you wanna to be a professional seller at this place, you gonna follow the steps bellow:</font><br>
-1.Input your stuff's information completely and directly.<br>
-2.Double check your input and submit.<p><font face="MV Boli" color="00FF00" size="6"><b>BUY:</font></b><br><font color="0000ff" size="4">To be an excellent buyer, it cannot be overemphasized for you to follow the steps bellow:</font><br>
-1.login at first<br>2.<br>3.
+<font color="0000ff" size="4">
+If you wanna to be a professional seller at this place, you gonna follow the steps bellow:<br><p></p>
+1.Input your stuff's information completely and directly.<br><p></p>
+2.Double check your input and submit.<p></p></font><font face="MV Boli" color="00FF00" size="6"><b>BUY:</font></b><br><font color="0000ff" size="4"><div align=left>
+To be an excellent buyer, it cannot be overemphasized for you to follow the steps bellow:<br><p></p>
+1.login at first<br><p></p>
+2.be sure to fill in all the information with right format if the format was wrong your product will not be sell<br><p></p>
+3.follow the information of your product and remember to check if you recieve the email.<p></p>
+
+1.AT first choose which kind of product your want to sell.<br><p></p>
+2.Fill in the product name.<br><p></p>
+3.Input the lowest price of your product.<br><p></p>
+4.Fill in the condition of the your product like brand new or second hand.<br><p></p>
+5.Fill in the way how you deliver your product.<br><p></p>
+6.Upload the picture of your product.<br><p></p>
+7.At last input the deadline in such format : Jan 2, 2012 14:20:00<br><p></p>
+8.double check especially the format of the deadline.<br></div><p></p>
+</font>
+<font size="10">Finally press submit<p></p></font>
+</div>
+<div align=center>
 <table width="30" border="10" bordercolor="009900">
 <caption><font face="MV Boli" color="00FF00" size="28">Categories</font></captio
 n>
@@ -27,6 +44,6 @@ n>
 >
 <th><button onclick="location.href='/badminton'">Badminton</button></th><tr>
 <th><button onclick="location.href='/others'">Others</button></th><tr>
-</table></div>
-
+</table>
+<div>
 </html>
